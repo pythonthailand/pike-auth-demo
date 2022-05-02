@@ -1,0 +1,26 @@
+version: "3.7"
+services:
+  web:
+    container_name: next-docker-development
+    build: .
+    command: npm run dev
+    ports:
+      - "80:3000"
+    volumes:
+      - ./:/app
+      - /app/node_modules
+      - /app/.next
+    depends_on:
+      - mongo
+    expose:
+      - 3000
+  mongo:
+    container_name: mongodb
+    image: mongo
+    restart: always
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    expose:
+      - 27017
